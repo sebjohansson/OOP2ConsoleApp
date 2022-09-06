@@ -42,7 +42,7 @@ class Program
                     Console.WriteLine("Successful login!");
                     Console.WriteLine("[1] Vy för att bjuda in till spel");
                     Console.WriteLine("[2] Vy för mottagna inbjudningar");
-                    Console.WriteLine("[3]");
+                    Console.WriteLine("[3] Vy för att visa chat");
                     Console.WriteLine("[4] Spela Sten Sax Påse");
 
                     string input = Console.ReadLine();
@@ -57,8 +57,10 @@ class Program
                             Console.WriteLine("xD");
                             break;
                         case 2:
+                            Invites();
                             break;
                         case 3:
+                            Chat();
                             break;
                         case 4:
                             PlayGame();
@@ -86,12 +88,6 @@ class Program
 
                 string player1 = "";
                 string player2 = "";
-
-                int rounds = 0;
-                int bestof = 0;
-
-                rounds++;
-                Console.WriteLine("Runda: " + rounds);
                 Console.WriteLine();
 
                 while (player1 != "Sten" && player1 != "Påse" && player1 != "Sax")
@@ -159,6 +155,45 @@ class Program
                                 break;
                         }
                         break;
+                    return;
+                }
+            }
+
+            void Invites()
+            {
+                Console.Clear();
+                using (SqlCommand command = new SqlCommand("SELECT * FROM [PlayerInvite]", con))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                Console.WriteLine($"{reader.GetName(i)}: {reader.GetValue(i)}");
+                            }
+                            Console.WriteLine();
+                        }
+                    }
+                }
+            }
+
+            void Chat()
+            {
+                Console.Clear();
+                using (SqlCommand command = new SqlCommand("SELECT * FROM [Message]", con))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                Console.WriteLine($"{reader.GetName(i)}: {reader.GetValue(i)}");
+                            }
+                            Console.WriteLine();
+                        }
+                    }
                 }
             }
         }
