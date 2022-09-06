@@ -593,9 +593,6 @@
       "originalTargetFrameworks": [
         "net6.0"
       ],
-      "sources": {
-        "https://api.nuget.org/v3/index.json": {}
-      },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
@@ -627,7 +624,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -636,7 +634,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\sebas\\.dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\sebas\\.dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }
