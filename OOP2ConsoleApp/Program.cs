@@ -53,8 +53,7 @@ class Program
                         case 0:
                             break;
                         case 1:
-                            //LogIn();
-                            Console.WriteLine("xD");
+                            Invite();
                             break;
                         case 2:
                             Invites();
@@ -64,8 +63,6 @@ class Program
                             break;
                         case 4:
                             PlayGame();
-                            break;
-                        default:
                             break;
                     }
                 }
@@ -155,8 +152,8 @@ class Program
                                 break;
                         }
                         break;
-                    return;
                 }
+                con.Close();
             }
 
             void Invites()
@@ -173,6 +170,7 @@ class Program
                                 Console.WriteLine($"{reader.GetName(i)}: {reader.GetValue(i)}");
                             }
                             Console.WriteLine();
+                            con.Close();
                         }
                     }
                 }
@@ -192,7 +190,26 @@ class Program
                                 Console.WriteLine($"{reader.GetName(i)}: {reader.GetValue(i)}");
                             }
                             Console.WriteLine();
+                            con.Close();
                         }
+                    }
+                }
+            }
+
+            void Invite()
+            {
+                Console.Clear();
+                using (SqlCommand command = new SqlCommand("INSERT INTO [PlayerInvite] (InviteToUserID, InviteFromUserID) VALUES (@InviteToUserID, @InviteFromUserID)", con))
+                {
+                    Console.WriteLine("Enter ID of account that you Challenge: ");
+                    int Challenged = Console.Read();
+                    command.Parameters.AddWithValue("@InviteToUserID", Challenged);
+                    command.Parameters.AddWithValue("@InviteFromUserID", 5);
+
+                    int result = command.ExecuteNonQuery();
+                    if (result < 0)
+                    {
+                        Console.WriteLine("Error inserting data into database!");
                     }
                 }
             }
