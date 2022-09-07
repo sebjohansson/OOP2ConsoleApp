@@ -170,8 +170,8 @@ class Program
                                 Console.WriteLine($"{reader.GetName(i)}: {reader.GetValue(i)}");
                             }
                             Console.WriteLine();
-                            con.Close();
                         }
+                        con.Close();
                     }
                 }
             }
@@ -201,15 +201,18 @@ class Program
                 Console.Clear();
                 using (SqlCommand command = new SqlCommand("INSERT INTO [PlayerInvite] (InviteToUserID, InviteFromUserID) VALUES (@InviteToUserID, @InviteFromUserID)", con))
                 {
-                    Console.WriteLine("Enter ID of account that you Challenge: ");
-                    int Challenged = Console.Read();
-                    command.Parameters.AddWithValue("@InviteToUserID", Challenged);
-                    command.Parameters.AddWithValue("@InviteFromUserID", 5);
+                    Random rnd = new Random();
+                    command.Parameters.AddWithValue("@InviteToUserID", rnd.Next());
+                    command.Parameters.AddWithValue("@InviteFromUserID", rnd.Next());
 
                     int result = command.ExecuteNonQuery();
                     if (result < 0)
                     {
-                        Console.WriteLine("Error inserting data into database!");
+                        Console.WriteLine("Kunde ej skapa en inbjudan!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Skapade en unik inbjudan!");
                     }
                 }
             }
