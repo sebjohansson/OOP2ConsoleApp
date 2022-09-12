@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Security;
+using System.Security.Cryptography;
 
 namespace OOP2ConsoleApp;
 
@@ -12,7 +14,7 @@ class Program
     //ställer in connection string
     static string connectionString = @"Server=localhost\SQLEXPRESS01;Database=RockPaperScissor;Trusted_Connection=True";
     static SqlConnection con = new SqlConnection(connectionString);
-
+    
     static void Main(string[] args)
     {
         
@@ -32,10 +34,10 @@ class Program
                 
                 cmd.Parameters.AddWithValue("@UserName", loginUsername);
                 cmd.Parameters.AddWithValue("@Password", loginPassword);
-                
+
                 int result = (int)cmd.ExecuteScalar();
                 Console.Clear();
-                //Console.WriteLine(result);
+                con.Close();
 
                 if (result > 0)
                 {
@@ -79,6 +81,7 @@ class Program
             }
             void PlayGame()
             {
+                con.Open();
                 Console.Clear();
                 Console.WriteLine("Sten Sax Påse");
                 Console.WriteLine("-------------");
@@ -158,6 +161,7 @@ class Program
 
             void Invites()
             {
+                con.Open();
                 Console.Clear();
                 using (SqlCommand command = new SqlCommand("SELECT * FROM [PlayerInvite]", con))
                 {
@@ -178,6 +182,7 @@ class Program
 
             void Chat()
             {
+                con.Open();
                 Console.Clear();
                 using (SqlCommand command = new SqlCommand("SELECT * FROM [Message]", con))
                 {
@@ -198,6 +203,7 @@ class Program
 
             void Invite()
             {
+                con.Open();
                 Console.Clear();
                 using (SqlCommand command = new SqlCommand("INSERT INTO [PlayerInvite] (InviteToUserID, InviteFromUserID) VALUES (@InviteToUserID, @InviteFromUserID)", con))
                 {
@@ -214,6 +220,7 @@ class Program
                     {
                         Console.WriteLine("Skapade en unik inbjudan!");
                     }
+                    con.Close();
                 }
             }
         }
