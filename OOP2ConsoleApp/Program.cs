@@ -195,8 +195,9 @@ class Program
                                 Console.WriteLine($"{reader.GetName(i)}: {reader.GetValue(i)}");
                             }
                             Console.WriteLine();
-                            con.Close();
+                            
                         }
+                        con.Close();
                     }
                 }
             }
